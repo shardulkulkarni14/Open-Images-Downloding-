@@ -16,6 +16,7 @@ def downnload_images(q, q1, total_images):
         print(counter, ": ", img)
         if os.path.isfile(filename):
             continue
+            
         if counter % 50 == 0:
             tt = (datetime.now() - timer).seconds
             remaining_img = (total_images - counter)
@@ -27,7 +28,6 @@ def downnload_images(q, q1, total_images):
             try:
                 os.makedirs(folder_name)
             except FileExistsError:
-                print('exception caught')
                 pass
 
         response = get(url)
@@ -40,7 +40,6 @@ def downnload_images(q, q1, total_images):
                 data = (img, 0)
             else:
                 data = (img, 1)
-                pass
             q1.put(data)
     q1.put(('a',2))
 
@@ -56,11 +55,9 @@ def write_to_file(q):
         if flag == 0:
             with open(filetxt, 'a') as s:
                 s.write(img + "\n")
-            pass
         elif flag == 1:
             with open(file, 'a') as f:
                 f.write(img + "\n")
-            pass
         elif flag == 2:
             break
 
@@ -74,12 +71,10 @@ if __name__ == '__main__':
     annFile = "E:/Cemtrex Labs/Open Images/test_occ_present_list.csv"
     csv_file = read_csv(annFile)
 
-    # import pdb; pdb.set_trace()
     imgs = csv_file.ImageID.tolist()
     urls = csv_file.OriginalURL.tolist()
-    imgs = imgs[0:]
-    urls = urls[0:]
     total_images = len(imgs)
+    
     counter = 0
     flag = 0
     for img, url in zip(imgs, urls):
